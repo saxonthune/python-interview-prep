@@ -1,0 +1,14 @@
+# throwaway: regenerated from _spec.py on every drill
+problems/**/solution.py
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
