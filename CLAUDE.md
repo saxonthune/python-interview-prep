@@ -12,7 +12,9 @@ problems/
       _spec.py
       solution.py
 drill/
-  harness.py        # run(...) for functions, run_class(...) for class designs
+  harness.py        # run(...) for functions, run_class(...) for class designs,
+                    # run_many(...) for multi-function drills
+  scaffold.py       # generates solution.py from _spec.py
 utils/
 ```
 
@@ -20,7 +22,7 @@ Topic directories and problem directories are both numbered (`01-`, `02-`, …)
 to give a stable order. When adding a new problem, pick the next number in the
 chosen topic.
 
-## Two problem styles
+## Three problem styles
 
 **Function-style** (most graph/tree/array problems):
 - `_spec.py` exposes `TITLE`, `DESCRIPTION`, `CONSTRAINTS`, `SIGNATURE`,
@@ -36,9 +38,19 @@ chosen topic.
   Use `Ellipsis` as `expected` to skip a check.
 - `solution.py` defines the class and calls `run_class(Cls, CASES)`.
 
+**Multi-function drill** (small-prompt practice sets like comprehensions):
+- `_spec.py` exposes `STUBS = [(section_or_None, signature, prompt), ...]`
+  and `CASES` as a `dict` keyed by function name.
+- The scaffold emits one stub per `STUBS` entry plus a `DRILLS` list, and
+  `solution.py` calls `run_many(DRILLS)`.
+- Use this when the unit of practice is a one-line expression and you want
+  ~10–20 prompts together in one file, not full problems.
+
 Pick the style that matches the problem. Class-style is only for problems that
-are inherently about designing a stateful object; everything else is
-function-style, even when it lives under a "design"-flavored topic.
+are inherently about designing a stateful object. Multi-function drills are for
+syntax/idiom practice where each prompt is too small to merit its own
+directory. Everything else is function-style, even when it lives under a
+"design"-flavored topic.
 
 ## Conventions for new specs
 
@@ -51,10 +63,17 @@ function-style, even when it lives under a "design"-flavored topic.
   neighboring problems rather than the bare minimum.
 - The `solution.py` skeleton leaves the function/class body as
   `"""YOUR CODE HERE"""` + `pass`. Don't pre-fill the solution unless asked.
-- The bootstrap block at the top of `solution.py` (the `_root` walk-up plus
-  `sys.path` inserts, then `from utils import *` and
-  `from drill.harness import run`) is identical across problems — copy it
-  verbatim from a neighbor.
+- **Do not hand-write `solution.py`.** The spec is the single source of truth;
+  generate `solution.py` via:
+  ```
+  python drill/scaffold.py problems/<topic>/<slug>/ [--force]
+  ```
+  This emits the standard bootstrap, the signature(s) from the spec, the
+  per-function docstring prompt(s), and the appropriate `__main__` block.
+  Use `--force` to regenerate (overwrites in-progress work, so warn the user).
+- For multi-function drills, type hints belong in the `STUBS` signature
+  strings in `_spec.py` — never hand-add them to `solution.py`. Re-run the
+  scaffold to propagate changes.
 
 ## Workflow when the user asks to add a problem
 

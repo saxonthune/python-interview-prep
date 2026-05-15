@@ -94,3 +94,46 @@ def run_class(cls, cases, compare=None):
 
     print(f"\n{passed}/{total} ops passed")
     return passed == total
+
+
+def run_many(drills, compare=None):
+    """
+    For drill files with many tiny functions (e.g. comprehension practice).
+
+    drills: list of (fn, cases). `cases` follows the run() convention:
+        tuple args splat, single value passed as-is.
+
+    Prints one summary line per function; failures get an indented detail line.
+    """
+    if compare is None:
+        compare = lambda r, e: r == e
+
+    total_passed = 0
+    total_cases = 0
+    for fn, cases in drills:
+        name = fn.__name__
+        n = len(cases)
+        passed = 0
+        failures = []
+        for i, (args, expected) in enumerate(cases):
+            call_args = args if isinstance(args, tuple) else (args,)
+            try:
+                result = fn(*call_args)
+                ok = compare(result, expected)
+            except Exception as e:
+                failures.append(f"    case {i}: RAISED {type(e).__name__}: {e}")
+                continue
+            if ok:
+                passed += 1
+            else:
+                failures.append(f"    case {i} {call_args}: got {result!r}, expected {expected!r}")
+
+        total_passed += passed
+        total_cases += n
+        marker = "✓" if passed == n else "✗"
+        print(f"{marker} {name}: {passed}/{n}")
+        for f in failures:
+            print(f)
+
+    print(f"\n{total_passed}/{total_cases} passed")
+    return total_passed == total_cases
