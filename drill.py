@@ -4,10 +4,18 @@ Drill a problem. Usage:
 
     python drill.py reset   same_tree                     # wipe & regenerate solution.py
     python drill.py reset   01-trees/02-same_tree         # full path also works
+    python drill.py reset   01/02                         # numeric shortcut: topic 01, problem 02
     python drill.py test    same_tree                     # run tests without resetting
     python drill.py promote same_tree                     # archive solution.py as example_NN.py
     python drill.py list                                  # list all problems
     python drill.py new     01-trees/03-invert_tree       # scaffold a new problem
+
+A problem name argument resolves in this order:
+  1. Exact relative path under problems/ (e.g. `01-trees/02-same_tree`).
+  2. Numeric shortcut matching the `NN-` prefix of each path segment
+     (e.g. `01/02` or `1/2`).
+  3. Leaf name (e.g. `same_tree`), matched against the trailing `-name`
+     of any problem dir.
 
 `reset` regenerates solution.py from _spec.py — your old attempt is gone.
 If you want to preserve it, use `test` instead.
@@ -43,13 +51,31 @@ def list_problems():
 def resolve(name):
     """Resolve a user-supplied name to a problem dir.
 
-    Accepts either an exact relative path (`01-trees/02-same_tree`) or a
-    leaf name (`same_tree`, matched against the trailing `-name` of any dir).
+    Accepts an exact relative path (`01-trees/02-same_tree`), a leaf name
+    (`same_tree`, matched against the trailing `-name` of any dir), or a
+    numeric shortcut (`03/04` → topic 03, problem 04).
     """
     name = name.strip("/")
     exact = PROBLEMS / name
     if (exact / "_spec.py").exists():
         return exact
+
+    parts = name.split("/")
+    if parts and all(p.isdigit() for p in parts):
+        matches = []
+        for d in iter_problem_dirs():
+            rel_parts = d.relative_to(PROBLEMS).parts
+            if len(rel_parts) != len(parts):
+                continue
+            if all(rp[:2].isdigit() and rp[:2] == p.zfill(2) for rp, p in zip(rel_parts, parts)):
+                matches.append(d)
+        if len(matches) == 1:
+            return matches[0]
+        if len(matches) > 1:
+            print(f"Ambiguous '{name}'. Matches:")
+            for m in matches:
+                print(f"  {m.relative_to(PROBLEMS)}")
+            return None
 
     matches = []
     for d in iter_problem_dirs():
@@ -235,18 +261,21 @@ def run_solution(problem_dir):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Drill coding problems.")
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     sub = parser.add_subparsers(dest="cmd", metavar="<command>")
 
     p_reset = sub.add_parser("reset", help="Wipe & regenerate solution.py from spec")
-    p_reset.add_argument("name", nargs="?", help="Problem name or path under problems/")
+    p_reset.add_argument("name", nargs="?", help="Problem name, path, or NN/NN numeric shortcut (see --help)")
     p_reset.add_argument("--all", action="store_true", help="Reset every problem")
 
     p_test = sub.add_parser("test", help="Run the current solution against test cases")
-    p_test.add_argument("name", help="Problem name or path under problems/")
+    p_test.add_argument("name", help="Problem name, path, or NN/NN numeric shortcut (see --help)")
 
     p_promote = sub.add_parser("promote", help="Archive solution.py as example_NN.py and regen a fresh solution.py")
-    p_promote.add_argument("name", help="Problem name or path under problems/")
+    p_promote.add_argument("name", help="Problem name, path, or NN/NN numeric shortcut (see --help)")
 
     p_new = sub.add_parser("new", help="Scaffold a new problem at the given path under problems/")
     p_new.add_argument("path", help="Path under problems/, e.g. 01-trees/03-invert_tree")
