@@ -1,0 +1,308 @@
+---
+import '../../styles/global.css';
+import { problems, idToSlug } from '../../lib/problems.ts';
+import { THEME_INIT } from '../../lib/theme.ts';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return problems.map((p) => ({ params: { id: idToSlug(p.id) }, props: { problem: p } }));
+}
+
+const { problem } = Astro.props;
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+const problemJson = JSON.stringify(problem);
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{problem.title}</title>
+    <script is:inline set:html={THEME_INIT}></script>
+  </head>
+  <body>
+    <main>
+      <nav class="back">
+        <a href={base}>← all problems</a>
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle theme">☾</button>
+      </nav>
+
+      <header class="problem-header">
+        <h1>{problem.title}</h1>
+        <p class="meta">
+          <span class="topic">{problem.topic}</span>
+          <span class="dot">·</span>
+          <span class="kind">{problem.kind}</span>
+        </p>
+      </header>
+
+      <section class="prose">
+        <h2>Description</h2>
+        <pre class="desc">{problem.description}</pre>
+        {problem.constraints && (
+          <>
+            <h2>Constraints</h2>
+            <pre class="desc">{problem.constraints}</pre>
+          </>
+        )}
+      </section>
+
+      <section>
+        <div class="pane">
+          <div class="pane-label">
+            <span>solution.py</span>
+            <div class="toolbar">
+              <span id="status" class="status"></span>
+              <button id="reset" class="btn-ghost">Reset</button>
+              <button id="run" class="btn-primary">Run</button>
+            </div>
+          </div>
+          <div id="banner" hidden>
+            <span>Skeleton has changed since you last saved.</span>
+            <span class="banner-actions">
+              <button id="keep" class="btn-ghost">Keep my code</button>
+              <button id="adopt" class="btn-ghost">Adopt new</button>
+            </span>
+          </div>
+          <div id="editor"></div>
+        </div>
+
+        <div class="pane">
+          <div class="pane-label"><span>output</span></div>
+          <pre id="output">Run the cases to see results here.</pre>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+
+    <script id="problem-data" type="application/json" set:html={problemJson}></script>
+
+    <script>
+      import { attachThemeToggle } from '../../lib/theme.ts';
+      attachThemeToggle('theme-toggle');
+    </script>
+
+    <script>
+      import { EditorState } from '@codemirror/state';
+      import { EditorView, basicSetup } from 'codemirror';
+      import { keymap } from '@codemirror/view';
+      import { indentWithTab } from '@codemirror/commands';
+      import { indentUnit } from '@codemirror/language';
+      import { python } from '@codemirror/lang-python';
+      import { oneDark } from '@codemirror/theme-one-dark';
+      import { loadSolution, saveSolution, clearSolution, debounce } from '../../lib/storage.ts';
+      import { runProblem, ensurePyodide } from '../../lib/pyodide-runner.ts';
+
+      // Pyodide runs in a Web Worker (see public/pyodide.worker.js), so
+      // warming up doesn't block the main thread.
+      let pyodideReady = false;
+      const statusInit = document.getElementById('status')!;
+      statusInit.textContent = 'Loading Python…';
+      ensurePyodide()
+        .then(() => {
+          pyodideReady = true;
+          if (statusInit.textContent === 'Loading Python…') statusInit.textContent = '';
+        })
+        .catch(() => {
+          statusInit.textContent = 'Python failed to load';
+        });
+      import type { Problem } from '../../lib/problems.ts';
+
+      const problem = JSON.parse(
+        document.getElementById('problem-data')!.textContent || '{}',
+      ) as Problem;
+
+      const editorEl = document.getElementById('editor')!;
+      const output = document.getElementById('output')!;
+      const statusEl = document.getElementById('status')!;
+      const banner = document.getElementById('banner') as HTMLDivElement;
+      const runBtn = document.getElementById('run') as HTMLButtonElement;
+      const resetBtn = document.getElementById('reset') as HTMLButtonElement;
+      const keepBtn = document.getElementById('keep') as HTMLButtonElement | null;
+      const adoptBtn = document.getElementById('adopt') as HTMLButtonElement | null;
+
+      const { code, skeletonChanged } = await loadSolution(problem.id, problem.skeleton);
+      if (skeletonChanged) banner.hidden = false;
+
+      const view = new EditorView({
+        state: EditorState.create({
+          doc: code,
+          extensions: [
+            basicSetup,
+            keymap.of([indentWithTab]),
+            indentUnit.of('    '),
+            python(),
+            oneDark,
+          ],
+        }),
+        parent: editorEl,
+      });
+
+      const persist = debounce(() => {
+        void saveSolution(problem.id, view.state.doc.toString(), problem.skeleton);
+      }, 500);
+      view.dom.addEventListener('keyup', persist);
+      view.dom.addEventListener('input', persist);
+
+      function setCode(newCode: string) {
+        view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: newCode } });
+      }
+
+      resetBtn.addEventListener('click', () => {
+        if (!confirm('Reset editor to the original skeleton? Your edits will be lost.')) return;
+        setCode(problem.skeleton);
+        clearSolution(problem.id);
+        banner.hidden = true;
+      });
+      keepBtn?.addEventListener('click', async () => {
+        await saveSolution(problem.id, view.state.doc.toString(), problem.skeleton);
+        banner.hidden = true;
+      });
+      adoptBtn?.addEventListener('click', () => {
+        setCode(problem.skeleton);
+        clearSolution(problem.id);
+        banner.hidden = true;
+      });
+
+      runBtn.addEventListener('click', async () => {
+        runBtn.disabled = true;
+        statusEl.textContent = pyodideReady ? 'Running…' : 'Loading Python…';
+        output.textContent = '';
+        const payload =
+          problem.kind === 'function'
+            ? { cases: problem.cases, mutates_input: problem.mutates_input }
+            : problem.kind === 'class'
+              ? { cases: problem.cases, class_name: problem.class_name }
+              : { cases: problem.cases, function_names: problem.function_names };
+        try {
+          const { output: out } = await runProblem({
+            kind: problem.kind,
+            payload,
+            userCode: view.state.doc.toString(),
+          });
+          output.textContent = out || '(no output)';
+        } catch (e) {
+          output.textContent = String(e);
+        } finally {
+          statusEl.textContent = '';
+          runBtn.disabled = false;
+        }
+      });
+    </script>
+
+    <style is:global>
+      :root { --mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace; }
+      body { max-width: 980px; padding: 1rem 1.25rem; }
+
+      .back {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        margin-bottom: 1.5rem;
+      }
+      .back a { color: var(--muted); }
+      .back a:hover { color: var(--text); }
+
+      .problem-header { margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+      h1 { font-size: 22px; font-weight: 600; margin: 0; }
+      h2 {
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        margin: 1.5rem 0 .5rem 0;
+      }
+      .meta { margin: .35rem 0 0 0; font-size: 13px; color: var(--muted); }
+      .meta .topic { text-transform: capitalize; }
+      .meta .dot { margin: 0 .4rem; opacity: .5; }
+      .meta .kind { font-family: var(--mono); font-size: 12px; }
+
+      .prose { margin-bottom: 2rem; }
+      .desc {
+        white-space: pre-wrap;
+        background: var(--desc-bg);
+        border: 1px solid var(--border);
+        padding: 1rem 1.1rem;
+        border-radius: 6px;
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      .pane {
+        margin-top: 1rem;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #0d1117;
+      }
+      .pane-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .4rem .75rem;
+        background: #21262d;
+        border-bottom: 1px solid #30363d;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: #8b949e;
+      }
+      .toolbar { display: flex; gap: .4rem; align-items: center; }
+      .status { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+      button { cursor: pointer; font-family: inherit; }
+      .btn-primary {
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: .3rem .75rem;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .btn-primary:hover:not(:disabled) { background: #000; }
+      .btn-primary:disabled { opacity: .5; cursor: default; }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid #30363d;
+        color: #c9d1d9;
+        border-radius: 5px;
+        padding: .25rem .65rem;
+        font-size: 12px;
+      }
+      .btn-ghost:hover { background: #30363d; }
+
+      #banner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: .5rem .75rem;
+        background: #fff8e1;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+      }
+      .banner-actions { display: flex; gap: .4rem; }
+
+      #editor { height: 480px; }
+      #editor .cm-editor { height: 100%; }
+      #editor .cm-scroller { font-family: var(--mono); font-size: 13px; }
+
+      #output {
+        background: #0d1117;
+        color: #c9d1d9;
+        padding: 1rem 1.1rem;
+        white-space: pre-wrap;
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.5;
+        height: 240px;
+        overflow: auto;
+        margin: 0;
+      }
+    </style>
+  </body>
+</html>

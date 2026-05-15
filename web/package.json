@@ -1,0 +1,17 @@
+{
+  "name": "python-interview-prep-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-python": "^6.1.6",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "astro": "^6.3.3",
+    "codemirror": "^6.0.1"
+  }
+}

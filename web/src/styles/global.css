@@ -1,0 +1,86 @@
+/* Warm-neutral palette. Light defaults; [data-theme="dark"] overrides. */
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --text: #1c1917;
+  --muted: #78716c;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --accent: #b45309;
+  --btn-fg: #ffffff;
+  --btn-bg: #1c1917;
+  --btn-bg-hover: #000;
+  --desc-bg: #ffffff;
+  --row-hover: #f5f4f1;
+  --banner-bg: #fef3c7;
+  /* editor/output panes deliberately stay dark in both themes */
+  --pane-chrome: #21262d;
+  --pane-chrome-border: #30363d;
+  --pane-chrome-text: #8b949e;
+  --output-bg: #0d1117;
+  --output-fg: #c9d1d9;
+  --ghost-bg-hover: #f3f0eb;
+  --ghost-border: var(--border-strong);
+  --ghost-text: var(--text);
+}
+
+:root[data-theme="dark"] {
+  --bg: #1c1917;          /* warm near-black (stone-900) */
+  --surface: #292524;     /* stone-800 */
+  --text: #f5f5f4;
+  --muted: #a8a29e;       /* stone-400 */
+  --border: #44403c;      /* stone-700 */
+  --border-strong: #57534e;
+  --accent: #f59e0b;      /* warm amber */
+  --btn-fg: #1c1917;
+  --btn-bg: #f5f5f4;
+  --btn-bg-hover: #ffffff;
+  --desc-bg: #292524;
+  --row-hover: #292524;
+  --banner-bg: #422006;   /* deep amber */
+  /* editor/output chrome unchanged — they're always dark */
+  --ghost-bg-hover: #3f3a36;
+  --ghost-border: #57534e;
+  --ghost-text: #f5f5f4;
+}
+
+html, body { background: var(--bg); color: var(--text); }
+body {
+  font-family: -apple-system, "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 auto;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button { cursor: pointer; font-family: inherit; }
+.btn-primary {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: none;
+  border-radius: 6px;
+  padding: .4rem .9rem;
+  font-size: 13px;
+  font-weight: 500;
+}
+.btn-primary:hover:not(:disabled) { background: var(--btn-bg-hover); }
+.btn-primary:disabled { opacity: .5; cursor: default; }
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  border-radius: 6px;
+  padding: .3rem .55rem;
+  font-size: 14px;
+  line-height: 1;
+}
+.btn-icon:hover { background: var(--row-hover); }
+
+.muted-link { color: var(--muted); font-size: 13px; text-decoration: none; }
+.muted-link:hover { color: var(--text); text-decoration: underline; }

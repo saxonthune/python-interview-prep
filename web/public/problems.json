@@ -1,0 +1,3777 @@
+[
+  {
+    "id": "01-arrays/01-first_non_repeating_char",
+    "topic": "arrays",
+    "title": "First Non-Repeating Character",
+    "description": "Given a string, return the index of the first character that does NOT\nrepeat anywhere else in the string. \"Repeating\" means occurring more\nthan once anywhere in the string -- nothing to do with adjacency.\nIf no such character exists, return -1.\n\nExample:\n    s = \"loveleetcode\"\n    -> 2 ('v' is the first character whose total count in s is 1.\n          'l', 'o', 'e' all appear more than once.)\n\nTraps:\n- \"First character that's unique SO FAR\" is wrong. You need overall\n  counts across the whole string, not a running first-seen check.\n  e.g. \"abcabd\" -> 2 ('c'), not 0 ('a' repeats later).\n- Comparison is case-sensitive: 'a' and 'A' are distinct.\n- Empty string returns -1.",
+    "constraints": "- 0 <= len(s) <= 10^5\n- s may contain any unicode characters (don't assume ASCII-only)\n- Case-sensitive",
+    "kind": "function",
+    "signature": "def solution(s: str) -> int:",
+    "skeleton": "def solution(s: str) -> int:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          "leetcode",
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          "loveleetcode",
+          2
+        ]
+      },
+      {
+        "__tuple__": [
+          "aabb",
+          -1
+        ]
+      },
+      {
+        "__tuple__": [
+          "z",
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          "",
+          -1
+        ]
+      },
+      {
+        "__tuple__": [
+          "aabbc",
+          4
+        ]
+      },
+      {
+        "__tuple__": [
+          "abcabd",
+          2
+        ]
+      },
+      {
+        "__tuple__": [
+          "aAbBcC",
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-arrays/02-valid_brackets",
+    "topic": "arrays",
+    "title": "Valid Brackets",
+    "description": "Given a string s containing only the characters '(', ')', '{', '}',\n'[' and ']', determine if the brackets are properly nested.\n\nA string is valid if:\n- every opening bracket is closed by the SAME type of bracket, AND\n- brackets are closed in the correct (LIFO) order, AND\n- every opening bracket has a matching close (stack is empty at end).\n\nExample:\n    s = \"{[]}\"      -> True\n    s = \"([)]\"      -> False  (interleaved, not nested)\n    s = \"(\"         -> False  (unclosed)\n\nTraps:\n- Interleaving is NOT nesting. \"([)]\" has matching counts of each\n  bracket type but the close order is wrong.\n- Counting opens vs. closes is insufficient -- \"(){\" has equal opens\n  and closes overall but is invalid (also \"][\" has count parity).\n- Don't forget to check the stack is empty at the END. A run that\n  never hits a mismatch but leaves opens on the stack (e.g. \"(\") is\n  still invalid.\n- Empty string is vacuously valid.",
+    "constraints": "- 0 <= len(s) <= 10^4\n- s contains only the characters '()[]{}'",
+    "kind": "function",
+    "signature": "def solution(s: str) -> bool:",
+    "skeleton": "def solution(s: str) -> bool:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          "()",
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          "()[]{}",
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          "{[]}",
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          "([{}])",
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          "(]",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          "([)]",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          "",
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          "(",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          ")",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          "((",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          "))",
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          "({[)]}",
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02-trees/01-basics/01-dfs",
+    "topic": "trees",
+    "title": "Tree DFS - Post-order Traversal",
+    "description": "Given the root of a binary tree, return a list of node values in\npost-order: left subtree, then right subtree, then the node itself.\n\nExample:\n        1\n       / \\\n      2   3\n     / \\\n    4   5\n\nPost-order: [4, 5, 2, 3, 1]",
+    "constraints": "- 0 <= number of nodes <= 1000\n- Node values are integers\n- Return [] for an empty tree",
+    "kind": "function",
+    "signature": "def solution(root: 'TreeNode | None') -> list[int]:",
+    "skeleton": "def solution(root: 'TreeNode | None') -> list[int]:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          [
+            4,
+            5,
+            2,
+            3,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1
+            ]
+          },
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          null,
+          []
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2
+            ]
+          },
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              null,
+              2
+            ]
+          },
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              3,
+              4,
+              null,
+              null,
+              5
+            ]
+          },
+          [
+            4,
+            2,
+            5,
+            3,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              null,
+              3,
+              null,
+              4
+            ]
+          },
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              null,
+              2,
+              null,
+              3,
+              null,
+              4
+            ]
+          },
+          [
+            4,
+            3,
+            2,
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02-trees/01-basics/02-bfs",
+    "topic": "trees",
+    "title": "Tree BFS - Level-order Traversal",
+    "description": "Given the root of a binary tree, return its level-order traversal as a\nlist of lists, where each inner list contains the node values at that\ndepth (left to right).\n\nExample:\n        3\n       / \\\n      9   20\n         /  \\\n        15   7\n\nLevel-order: [[3], [9, 20], [15, 7]]\n\nThe level grouping is the point of this drill: it forces you to track\nlevel boundaries on the queue, not just enqueue/dequeue blindly.",
+    "constraints": "- 0 <= number of nodes <= 1000\n- Node values are integers\n- Return [] for an empty tree",
+    "kind": "function",
+    "signature": "def solution(root: 'TreeNode | None') -> list[list[int]]:",
+    "skeleton": "def solution(root: 'TreeNode | None') -> list[list[int]]:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              3,
+              9,
+              20,
+              null,
+              null,
+              15,
+              7
+            ]
+          },
+          [
+            [
+              3
+            ],
+            [
+              9,
+              20
+            ],
+            [
+              15,
+              7
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1
+            ]
+          },
+          [
+            [
+              1
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          null,
+          []
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              3
+            ]
+          },
+          [
+            [
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              null,
+              3
+            ]
+          },
+          [
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              3
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              null,
+              2,
+              null,
+              3
+            ]
+          },
+          [
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              3
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          [
+            [
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5,
+              6,
+              7
+            ]
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tree__": [
+              1,
+              2,
+              3,
+              4,
+              null,
+              null,
+              5
+            ]
+          },
+          [
+            [
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02-trees/02-same_tree",
+    "topic": "trees",
+    "title": "Same Tree",
+    "description": "Given the roots of two binary trees p and q, return True if they are\nstructurally identical AND every corresponding node has the same value.\n\nTwo empty trees are considered equal.",
+    "constraints": "- 0 <= number of nodes in each tree <= 100\n- Node values are integers",
+    "kind": "function",
+    "signature": "def solution(p: 'TreeNode | None', q: 'TreeNode | None') -> bool:",
+    "skeleton": "def solution(p: 'TreeNode | None', q: 'TreeNode | None') -> bool:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              null,
+              null
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1
+                ]
+              },
+              null
+            ]
+          },
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              null,
+              {
+                "__tree__": [
+                  1
+                ]
+              }
+            ]
+          },
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  4
+                ]
+              }
+            ]
+          },
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "__tree__": [
+                  1,
+                  null,
+                  2
+                ]
+              }
+            ]
+          },
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              {
+                "__tree__": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  6
+                ]
+              }
+            ]
+          },
+          false
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  42
+                ]
+              },
+              {
+                "__tree__": [
+                  42
+                ]
+              }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "__tree__": [
+                  1
+                ]
+              },
+              {
+                "__tree__": [
+                  2
+                ]
+              }
+            ]
+          },
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-graphs/01-basics/01-dfs",
+    "topic": "graphs",
+    "title": "Graph DFS - Visit Order",
+    "description": "Given an adjacency-list graph and a start node, return the order in\nwhich nodes are visited by depth-first search starting from `start`.\n\nVisit neighbors in the order they appear in graph[node]. Skip already-\nvisited nodes. Only nodes reachable from `start` should appear.\n\nExample:\n    graph = {0: [1, 2], 1: [0, 3, 4], 2: [0], 3: [1], 4: [1]}\n    start = 0\n    DFS order: [0, 1, 3, 4, 2]",
+    "constraints": "- Nodes are integers\n- Graph may contain cycles\n- Graph may be disconnected (only return the component reachable from start)\n- 0 <= number of nodes <= 1000",
+    "kind": "function",
+    "signature": "def solution(graph: dict[int, list[int]], start: int) -> list[int]:",
+    "skeleton": "def solution(graph: dict[int, list[int]], start: int) -> list[int]:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": []
+              },
+              0
+            ]
+          },
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0,
+                  2
+                ],
+                "2": [
+                  1,
+                  3
+                ],
+                "3": [
+                  2
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2
+                ],
+                "1": [
+                  0,
+                  3,
+                  4
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  1
+                ],
+                "4": [
+                  1
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            3,
+            4,
+            2
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0,
+                  2
+                ],
+                "2": [
+                  1,
+                  0
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0
+                ],
+                "2": [
+                  3
+                ],
+                "3": [
+                  2
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2,
+                  3
+                ],
+                "1": [
+                  0
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  0
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2
+                ],
+                "1": [
+                  0,
+                  3,
+                  4
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  1
+                ],
+                "4": [
+                  1
+                ]
+              },
+              2
+            ]
+          },
+          [
+            2,
+            0,
+            1,
+            3,
+            4
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-graphs/01-basics/02-bfs",
+    "topic": "graphs",
+    "title": "Graph BFS - Visit Order",
+    "description": "Given an adjacency-list graph and a start node, return the order in\nwhich nodes are visited by breadth-first search starting from `start`.\n\nEnqueue neighbors in the order they appear in graph[node]. Mark a node\nvisited when you enqueue it (not when you dequeue) to avoid duplicates.\nOnly nodes reachable from `start` should appear.\n\nExample:\n    graph = {0: [1, 2], 1: [0, 3, 4], 2: [0], 3: [1], 4: [1]}\n    start = 0\n    BFS order: [0, 1, 2, 3, 4]",
+    "constraints": "- Nodes are integers\n- Graph may contain cycles\n- Graph may be disconnected (only return the component reachable from start)\n- 0 <= number of nodes <= 1000",
+    "kind": "function",
+    "signature": "def solution(graph: dict[int, list[int]], start: int) -> list[int]:",
+    "skeleton": "def solution(graph: dict[int, list[int]], start: int) -> list[int]:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": []
+              },
+              0
+            ]
+          },
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0,
+                  2
+                ],
+                "2": [
+                  1,
+                  3
+                ],
+                "3": [
+                  2
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2
+                ],
+                "1": [
+                  0,
+                  3,
+                  4
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  1
+                ],
+                "4": [
+                  1
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0,
+                  2
+                ],
+                "2": [
+                  1,
+                  0
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1
+                ],
+                "1": [
+                  0
+                ],
+                "2": [
+                  3
+                ],
+                "3": [
+                  2
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2,
+                  3
+                ],
+                "1": [
+                  0
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  0
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2
+                ],
+                "1": [
+                  0,
+                  3,
+                  4
+                ],
+                "2": [
+                  0
+                ],
+                "3": [
+                  1
+                ],
+                "4": [
+                  1
+                ]
+              },
+              2
+            ]
+          },
+          [
+            2,
+            0,
+            1,
+            3,
+            4
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              {
+                "0": [
+                  1,
+                  2,
+                  3
+                ],
+                "1": [
+                  0,
+                  4
+                ],
+                "2": [
+                  0,
+                  5
+                ],
+                "3": [
+                  0,
+                  6
+                ],
+                "4": [
+                  1
+                ],
+                "5": [
+                  2
+                ],
+                "6": [
+                  3
+                ]
+              },
+              0
+            ]
+          },
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-graphs/02-num_islands",
+    "topic": "graphs",
+    "title": "Number of Islands",
+    "description": "Given a 2D grid of '1' (land) and '0' (water), count the number of\nislands. An island is a maximal group of '1' cells connected\nhorizontally or vertically (NOT diagonally).\n\nExample:\n    grid = [[\"1\",\"1\",\"0\"],\n            [\"1\",\"0\",\"0\"],\n            [\"0\",\"0\",\"1\"]]\n    -> 2 islands (the L-shape in the top-left, and the lone '1' at bottom-right)",
+    "constraints": "- Grid dimensions up to 300x300\n- Cells are strings '0' or '1' (not ints)\n- Diagonal connections don't count\n- Empty grid returns 0",
+    "kind": "function",
+    "signature": "def solution(grid: list[list[str]]) -> int:",
+    "skeleton": "def solution(grid: list[list[str]]) -> int:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": true,
+    "cases": [
+      {
+        "__tuple__": [
+          [
+            [
+              "1",
+              "1",
+              "0"
+            ],
+            [
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "1"
+            ]
+          ],
+          2
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1",
+              "1",
+              "1"
+            ],
+            [
+              "0",
+              "1",
+              "0"
+            ],
+            [
+              "1",
+              "1",
+              "1"
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [],
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "0"
+            ]
+          ],
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1"
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1",
+              "0",
+              "1",
+              "0",
+              "1"
+            ]
+          ],
+          3
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0"
+            ]
+          ],
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1",
+              "1"
+            ],
+            [
+              "1",
+              "1"
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1",
+              "0",
+              "1"
+            ],
+            [
+              "0",
+              "1",
+              "0"
+            ],
+            [
+              "1",
+              "0",
+              "1"
+            ]
+          ],
+          5
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              "1"
+            ],
+            [
+              "1"
+            ],
+            [
+              "0"
+            ],
+            [
+              "1"
+            ]
+          ],
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-graphs/03-count_components",
+    "topic": "graphs",
+    "title": "Count Connected Components (Adjacency Matrix)",
+    "description": "Given an N x N adjacency matrix `m` for an undirected graph, return the\nnumber of connected components (distinct subgraphs).\n\nm[i][j] == 1 means there is an edge between nodes i and j.\nm[i][i] is always 1 (a node is connected to itself).\nThe matrix is symmetric: m[i][j] == m[j][i].\n\nExample:\n    m = [[1, 1, 0],\n         [1, 1, 0],\n         [0, 0, 1]]\n    -> 2 components: {0, 1} and {2}\n\nThe drill: for each unvisited node, run a fill (DFS or BFS) that walks\nrow m[node] to find neighbors, marks them visited, and recurses. Each\nfill-launch increments the component count.",
+    "constraints": "- 1 <= N <= 200\n- m[i][j] is 0 or 1\n- m[i][i] == 1\n- m is symmetric (undirected edges)",
+    "kind": "function",
+    "signature": "def solution(m: list[list[int]]) -> int:",
+    "skeleton": "def solution(m: list[list[int]]) -> int:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          2
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          3
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              1,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ],
+          2
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ]
+          ],
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-graphs/04-inform_employees",
+    "topic": "graphs",
+    "title": "Time Needed to Inform All Employees",
+    "description": "You are given a list of employees as tuples (id, manager_id, delay).\n\nThe CEO is identified by manager_id == -1. `delay` on each employee is\nthe time that employee takes to inform their direct reports (so the\nCEO's delay is the time before the CEO's reports receive the email).\n\nWhen a manager receives the email, they take `delay` minutes to inform\nall of their direct reports (informing happens in parallel — every\ndirect report receives it at the same moment, `delay` minutes later).\nEach report then independently informs their own subordinates after\ntheir own delay. Leaves have no one to inform, so their delay does not\ncontribute.\n\nReturn the total number of minutes until every employee has been\ninformed — equivalently, the maximum weighted root-to-leaf path in the\nmanagement tree, where edge weight is the parent's delay.\n\nExample:\n    employees = [\n        (0, -1, 5),  # CEO, takes 5 min to inform reports\n        (1,  0, 3),  # report of CEO, takes 3 to inform their reports\n        (2,  0, 1),  # report of CEO, takes 1\n        (3,  1, 0),  # leaf under 1\n        (4,  2, 0),  # leaf under 2\n    ]\n    Path to 3: 5 + 3 = 8\n    Path to 4: 5 + 1 = 6\n    -> 8\n\nEdges to watch:\n- The input order is arbitrary — don't assume index == id or that\n  parents appear before children.\n- Leaf delay is irrelevant (no one to inform).\n- The tree may be a single node (just the CEO) -> 0.",
+    "constraints": "- Exactly one employee has manager_id == -1 (the CEO)\n- ids are unique\n- The structure is a tree (no cycles, every non-CEO has exactly one manager)\n- delay >= 0\n- 1 <= len(employees)",
+    "kind": "function",
+    "signature": "def solution(employees: list[tuple[int, int, int]]) -> int:",
+    "skeleton": "def solution(employees: list[tuple[int, int, int]]) -> int:\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "mutates_input": false,
+    "cases": [
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                0
+              ]
+            }
+          ],
+          0
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                0,
+                0
+              ]
+            }
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                5
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                0,
+                3
+              ]
+            },
+            {
+              "__tuple__": [
+                2,
+                0,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                1,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                4,
+                2,
+                0
+              ]
+            }
+          ],
+          8
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                0,
+                2
+              ]
+            },
+            {
+              "__tuple__": [
+                2,
+                1,
+                3
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                2,
+                4
+              ]
+            }
+          ],
+          6
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                2,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                2,
+                -1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                2,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                4,
+                2,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                5,
+                2,
+                0
+              ]
+            }
+          ],
+          1
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                7,
+                3,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                1,
+                4
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                -1,
+                2
+              ]
+            },
+            {
+              "__tuple__": [
+                5,
+                1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                9,
+                5,
+                0
+              ]
+            }
+          ],
+          6
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                2
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                0,
+                3
+              ]
+            },
+            {
+              "__tuple__": [
+                2,
+                0,
+                3
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                1,
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                4,
+                2,
+                0
+              ]
+            }
+          ],
+          5
+        ]
+      },
+      {
+        "__tuple__": [
+          [
+            {
+              "__tuple__": [
+                0,
+                -1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                1,
+                0,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                2,
+                1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                3,
+                2,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                4,
+                0,
+                10
+              ]
+            },
+            {
+              "__tuple__": [
+                5,
+                4,
+                0
+              ]
+            }
+          ],
+          11
+        ]
+      }
+    ]
+  },
+  {
+    "id": "04-design/01-min_stack",
+    "topic": "design",
+    "title": "Min Stack",
+    "description": "Implement a stack that supports push, pop, top, and retrieving the\nminimum element — all in O(1) time.\n\nMethods:\n    push(val) -> None\n    pop()     -> None\n    top()     -> int   (the value on top, without removing)\n    getMin()  -> int   (the current minimum in the stack)\n\nThe trick: a single auxiliary stack of running minimums (or pairs of\n(val, min_so_far)) keeps each operation O(1).",
+    "constraints": "- pop, top, getMin are only called on non-empty stacks\n- Values are integers\n- All four operations must be O(1)",
+    "kind": "class",
+    "class_name": "MinStack",
+    "signature": "class MinStack:\n    def __init__(self):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def push(self, val: int) -> None:\n        pass\n\n    def pop(self) -> None:\n        pass\n\n    def top(self) -> int:\n        pass\n\n    def getMin(self) -> int:\n        pass",
+    "skeleton": "class MinStack:\n    def __init__(self):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def push(self, val: int) -> None:\n        pass\n\n    def pop(self) -> None:\n        pass\n\n    def top(self) -> int:\n        pass\n\n    def getMin(self) -> int:\n        pass\n",
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "push",
+                -2,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                0,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                -3,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                -3
+              ]
+            },
+            {
+              "__tuple__": [
+                "pop",
+                {
+                  "__tuple__": []
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "top",
+                {
+                  "__tuple__": []
+                },
+                0
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                -2
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "push",
+                1,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                1,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                "pop",
+                {
+                  "__tuple__": []
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                "pop",
+                {
+                  "__tuple__": []
+                },
+                null
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "push",
+                5,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                7,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                9,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                5
+              ]
+            },
+            {
+              "__tuple__": [
+                "top",
+                {
+                  "__tuple__": []
+                },
+                9
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "push",
+                9,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                5,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "push",
+                1,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                "pop",
+                {
+                  "__tuple__": []
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                5
+              ]
+            },
+            {
+              "__tuple__": [
+                "pop",
+                {
+                  "__tuple__": []
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                9
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "push",
+                42,
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "top",
+                {
+                  "__tuple__": []
+                },
+                42
+              ]
+            },
+            {
+              "__tuple__": [
+                "getMin",
+                {
+                  "__tuple__": []
+                },
+                42
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "04-design/02-lru_cache",
+    "topic": "design",
+    "title": "LRU Cache",
+    "description": "Implement a Least Recently Used (LRU) cache with fixed capacity.\n\nMethods:\n    __init__(capacity)         set capacity (>= 1)\n    get(key) -> int            return value if present, else -1.\n                               accessing a key marks it most-recently-used.\n    put(key, value) -> None    insert/update. If at capacity, evict the\n                               least-recently-used key. put also marks the\n                               key most-recently-used.\n\nBoth get and put must run in O(1) average time.\n\nThe classic structure: dict[key] -> doubly-linked-list-node, plus a\nDLL ordered by recency. Or use collections.OrderedDict and call\nmove_to_end / popitem(last=False).",
+    "constraints": "- 1 <= capacity <= 3000\n- 0 <= key, value <= 10^4\n- get and put both O(1) average time\n- 'Use' = either get or put on a key",
+    "kind": "class",
+    "class_name": "LRUCache",
+    "signature": "class LRUCache:\n    def __init__(self, capacity: int):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def get(self, key: int) -> int:\n        pass\n\n    def put(self, key: int, value: int) -> None:\n        pass",
+    "skeleton": "class LRUCache:\n    def __init__(self, capacity: int):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def get(self, key: int) -> int:\n        pass\n\n    def put(self, key: int, value: int) -> None:\n        pass\n",
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              2
+            ]
+          },
+          [
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    1,
+                    1
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    2,
+                    2
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    3,
+                    3
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                2,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    4,
+                    4
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                3,
+                3
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                4,
+                4
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              1
+            ]
+          },
+          [
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    1,
+                    100
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                100
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    2,
+                    200
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                2,
+                200
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              2
+            ]
+          },
+          [
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    1,
+                    1
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    2,
+                    2
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    1,
+                    11
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    3,
+                    3
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                11
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                2,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                3,
+                3
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              2
+            ]
+          },
+          [
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    1,
+                    1
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    2,
+                    2
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                1
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    3,
+                    3
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                2,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                1,
+                1
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              2
+            ]
+          },
+          [
+            {
+              "__tuple__": [
+                "get",
+                99,
+                -1
+              ]
+            },
+            {
+              "__tuple__": [
+                "put",
+                {
+                  "__tuple__": [
+                    5,
+                    50
+                  ]
+                },
+                null
+              ]
+            },
+            {
+              "__tuple__": [
+                "get",
+                5,
+                50
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "04-design/03-logger_rate_limiter",
+    "topic": "design",
+    "title": "Logger Rate Limiter",
+    "description": "Design a logger that decides whether a message should be printed.\n\nA message should print if and only if it has NOT been printed in the\nlast 10 seconds. Timestamps arrive in non-decreasing order.\n\nMethods:\n    __init__()\n    shouldPrintMessage(timestamp, message) -> bool\n        - True  => print the message (and record this timestamp)\n        - False => suppress (don't update the recorded timestamp)\n\nExample:\n    log = Logger()\n    log.shouldPrintMessage(1,  \"foo\")  -> True   (first time)\n    log.shouldPrintMessage(2,  \"bar\")  -> True   (\"bar\" never seen)\n    log.shouldPrintMessage(3,  \"foo\")  -> False  (gap = 2 < 10)\n    log.shouldPrintMessage(11, \"foo\")  -> True   (gap = 10, allowed)\n    log.shouldPrintMessage(12, \"foo\")  -> False  (gap = 1 since t=11)\n\nEdge to watch: when shouldPrint returns False you must NOT update the\nstored timestamp. Otherwise repeated suppressed calls would slide the\nwindow forward and never let the message through.",
+    "constraints": "- Timestamps arrive in non-decreasing order\n- 'Last 10 seconds' means: print only if (timestamp - last_printed) >= 10\n- Message strings are arbitrary",
+    "kind": "class",
+    "class_name": "Logger",
+    "signature": "class Logger:\n    def __init__(self):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def shouldPrintMessage(self, timestamp: int, message: str) -> bool:\n        pass",
+    "skeleton": "class Logger:\n    def __init__(self):\n        \"\"\"YOUR CODE HERE\"\"\"\n        pass\n\n    def shouldPrintMessage(self, timestamp: int, message: str) -> bool:\n        pass\n",
+    "cases": [
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    1,
+                    "foo"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    2,
+                    "bar"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    3,
+                    "foo"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    8,
+                    "bar"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    10,
+                    "foo"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    11,
+                    "foo"
+                  ]
+                },
+                true
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    0,
+                    "x"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    9,
+                    "x"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    10,
+                    "x"
+                  ]
+                },
+                true
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    0,
+                    "x"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    5,
+                    "x"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    8,
+                    "x"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    10,
+                    "x"
+                  ]
+                },
+                true
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    1,
+                    "a"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    1,
+                    "b"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    1,
+                    "c"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    2,
+                    "a"
+                  ]
+                },
+                false
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    2,
+                    "b"
+                  ]
+                },
+                false
+              ]
+            }
+          ]
+        ]
+      },
+      {
+        "__tuple__": [
+          {
+            "__tuple__": []
+          },
+          [
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    5,
+                    "hi"
+                  ]
+                },
+                true
+              ]
+            },
+            {
+              "__tuple__": [
+                "shouldPrintMessage",
+                {
+                  "__tuple__": [
+                    5,
+                    "hi"
+                  ]
+                },
+                false
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "05-comprehensions/01-basics",
+    "topic": "comprehensions",
+    "title": "Comprehensions: Basics",
+    "description": "Practice the syntactic surface of list comprehensions: map, filter,\nmap+filter, conditional value, enumerate, zip, nested iteration,\nand tuple-unpacking in the `for` clause.\n\nEach function below has a one-line docstring prompt. Aim to solve each in\nONE expression (a list comprehension). If you find yourself reaching for\na loop body or a helper, you're probably fighting the comp — step back.\n\nCoverage map:\n    map / filter / map+filter         doubles, positives, squared_evens\n    conditional value (ternary)       clamp_negatives\n    enumerate                         indexed_positives\n    zip                               pairwise_sums\n    flatten / nested comp / product   flatten, transpose, cartesian\n    unpacking in `for`                swap_pairs",
+    "constraints": "- Solve each prompt in a single expression where possible.\n- Inputs may be empty; handle the empty case naturally (your comp\n  should already do the right thing).\n- Don't import anything; everything here is plain builtins.",
+    "kind": "multi",
+    "skeleton": "# ---------- map / filter ----------\n\ndef doubles(xs: list[int]) -> list[int]:\n    \"\"\"Return each element doubled.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef positives(xs: list[int]) -> list[int]:\n    \"\"\"Return only the strictly-positive elements.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef squared_evens(xs: list[int]) -> list[int]:\n    \"\"\"Return the squares of the even elements.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- conditional value ----------\n\ndef clamp_negatives(xs: list[int]) -> list[int]:\n    \"\"\"Return xs with every negative replaced by 0 (keep non-negatives as-is).\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- enumerate ----------\n\ndef indexed_positives(xs: list[int]) -> list[tuple[int, int]]:\n    \"\"\"Return (index, value) pairs for the strictly-positive elements.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- zip ----------\n\ndef pairwise_sums(a: list[int], b: list[int]) -> list[int]:\n    \"\"\"Return elementwise sums of a and b (stop at the shorter list).\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- nested iteration ----------\n\ndef flatten(grid: list[list[int]]) -> list[int]:\n    \"\"\"Flatten a list of lists into a single list.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef transpose(grid: list[list[int]]) -> list[list[int]]:\n    \"\"\"Transpose a rectangular grid (rows become columns).\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef cartesian(a: list, b: list) -> list[tuple]:\n    \"\"\"Return all (x, y) pairs with x from a, y from b, in row-major order.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- unpacking in the for clause ----------\n\ndef swap_pairs(pairs: list[tuple]) -> list[tuple]:\n    \"\"\"Given a list of (a, b) tuples, return [(b, a), ...].\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "function_names": [
+      "doubles",
+      "positives",
+      "squared_evens",
+      "clamp_negatives",
+      "indexed_positives",
+      "pairwise_sums",
+      "flatten",
+      "transpose",
+      "cartesian",
+      "swap_pairs"
+    ],
+    "cases": {
+      "doubles": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              2,
+              4,
+              6
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -1,
+              0,
+              5
+            ],
+            [
+              -2,
+              0,
+              10
+            ]
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "__tuple__": [
+            [
+              -2,
+              -1,
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              0
+            ],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -1,
+              -2
+            ],
+            []
+          ]
+        }
+      ],
+      "squared_evens": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              4,
+              16
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              3,
+              5
+            ],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              2
+            ],
+            [
+              4
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        }
+      ],
+      "clamp_negatives": [
+        {
+          "__tuple__": [
+            [
+              -3,
+              -1,
+              0,
+              4,
+              -2
+            ],
+            [
+              0,
+              0,
+              0,
+              4,
+              0
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        }
+      ],
+      "indexed_positives": [
+        {
+          "__tuple__": [
+            [
+              0,
+              -1,
+              3,
+              -4,
+              5
+            ],
+            [
+              {
+                "__tuple__": [
+                  2,
+                  3
+                ]
+              },
+              {
+                "__tuple__": [
+                  4,
+                  5
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              {
+                "__tuple__": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "__tuple__": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "__tuple__": [
+                  2,
+                  3
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -1,
+              -2
+            ],
+            []
+          ]
+        }
+      ],
+      "pairwise_sums": [
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                [
+                  10,
+                  20,
+                  30
+                ]
+              ]
+            },
+            [
+              11,
+              22,
+              33
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [],
+                []
+              ]
+            },
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  10,
+                  20,
+                  30
+                ]
+              ]
+            },
+            [
+              11,
+              22
+            ]
+          ]
+        }
+      ],
+      "flatten": [
+        {
+          "__tuple__": [
+            [
+              [
+                1,
+                2
+              ],
+              [
+                3,
+                4,
+                5
+              ],
+              [
+                6
+              ]
+            ],
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              []
+            ],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              [
+                1
+              ],
+              [],
+              [
+                2,
+                3
+              ]
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        }
+      ],
+      "transpose": [
+        {
+          "__tuple__": [
+            [
+              [
+                1,
+                2,
+                3
+              ],
+              [
+                4,
+                5,
+                6
+              ]
+            ],
+            [
+              [
+                1,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                6
+              ]
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              [
+                1
+              ]
+            ],
+            [
+              [
+                1
+              ]
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              [
+                1,
+                2
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                5,
+                6
+              ]
+            ],
+            [
+              [
+                1,
+                3,
+                5
+              ],
+              [
+                2,
+                4,
+                6
+              ]
+            ]
+          ]
+        }
+      ],
+      "cartesian": [
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [
+                  1,
+                  2
+                ],
+                [
+                  "a",
+                  "b"
+                ]
+              ]
+            },
+            [
+              {
+                "__tuple__": [
+                  1,
+                  "a"
+                ]
+              },
+              {
+                "__tuple__": [
+                  1,
+                  "b"
+                ]
+              },
+              {
+                "__tuple__": [
+                  2,
+                  "a"
+                ]
+              },
+              {
+                "__tuple__": [
+                  2,
+                  "b"
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [],
+                [
+                  1,
+                  2
+                ]
+              ]
+            },
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                [
+                  1
+                ],
+                [
+                  "a"
+                ]
+              ]
+            },
+            [
+              {
+                "__tuple__": [
+                  1,
+                  "a"
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "swap_pairs": [
+        {
+          "__tuple__": [
+            [
+              {
+                "__tuple__": [
+                  1,
+                  2
+                ]
+              },
+              {
+                "__tuple__": [
+                  3,
+                  4
+                ]
+              }
+            ],
+            [
+              {
+                "__tuple__": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "__tuple__": [
+                  4,
+                  3
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            []
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              {
+                "__tuple__": [
+                  "a",
+                  "b"
+                ]
+              }
+            ],
+            [
+              {
+                "__tuple__": [
+                  "b",
+                  "a"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "05-comprehensions/02-set_and_dict_comps",
+    "topic": "comprehensions",
+    "title": "Comprehensions: Set and Dict",
+    "description": "Practice set and dict comprehensions. The syntax mirrors list comps\nbut with `{}` braces; for dicts you write `key: value` after the brace.\n\nAim to solve each in ONE expression. The dict-comprehension patterns\nhere cover the three things you'll do 90% of the time: build from a\nsequence, invert an existing dict, and filter an existing dict.\n\nCoverage map:\n    set comp                          unique_lengths\n    dict comp / build                 length_by_word\n    dict comp / invert                invert_dict\n    dict comp / filter                filter_dict_by_value",
+    "constraints": "- Solve each prompt in a single expression where possible.\n- Inputs may be empty; handle the empty case naturally.\n- Don't import anything; everything here is plain builtins.",
+    "kind": "multi",
+    "skeleton": "# ---------- set comp ----------\n\ndef unique_lengths(words: list[str]) -> set[int]:\n    \"\"\"Return the set of distinct word lengths.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- dict comp ----------\n\ndef length_by_word(words: list[str]) -> dict[str, int]:\n    \"\"\"Return a dict mapping each word to its length.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef invert_dict(d: dict) -> dict:\n    \"\"\"Return d with keys and values swapped (assume values are unique).\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef filter_dict_by_value(d: dict[str, int], threshold: int) -> dict[str, int]:\n    \"\"\"Return the entries of d whose value is >= threshold.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "function_names": [
+      "unique_lengths",
+      "length_by_word",
+      "invert_dict",
+      "filter_dict_by_value"
+    ],
+    "cases": {
+      "unique_lengths": [
+        {
+          "__tuple__": [
+            [
+              "a",
+              "bb",
+              "cc",
+              "ddd"
+            ],
+            {
+              "__set__": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            {
+              "__set__": []
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              "abc"
+            ],
+            {
+              "__set__": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              "xx",
+              "yy"
+            ],
+            {
+              "__set__": [
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "length_by_word": [
+        {
+          "__tuple__": [
+            [
+              "a",
+              "bb",
+              "ccc"
+            ],
+            {
+              "a": 1,
+              "bb": 2,
+              "ccc": 3
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            {}
+          ]
+        }
+      ],
+      "invert_dict": [
+        {
+          "__tuple__": [
+            {
+              "a": 1,
+              "b": 2
+            },
+            {
+              "1": "a",
+              "2": "b"
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            {},
+            {}
+          ]
+        }
+      ],
+      "filter_dict_by_value": [
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {
+                  "a": 1,
+                  "b": 5,
+                  "c": 3
+                },
+                3
+              ]
+            },
+            {
+              "b": 5,
+              "c": 3
+            }
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {
+                  "a": 1
+                },
+                5
+              ]
+            },
+            {}
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {},
+                0
+              ]
+            },
+            {}
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "05-comprehensions/03-generators",
+    "topic": "comprehensions",
+    "title": "Comprehensions: Generators",
+    "description": "Practice generator expressions — comprehensions without the brackets,\npassed directly into a reducer that consumes them lazily.\n\nTwo patterns to internalize:\n\n1. `func(expr for x in xs if cond)` — pass the gen-exp as a sole\n   argument and the parentheses can be elided. Use with sum / any /\n   all / max / min.\n2. `next((expr for x in xs if cond), default)` — find-first with a\n   safe default. The default is critical; without it, an empty match\n   raises StopIteration.\n\nTraps worth knowing:\n- `all([])` is True (vacuous truth). `any([])` is False.\n- `max([])` raises; use `max(..., default=0)`.\n- `next(gen)` with no default raises on empty.\n\nCoverage map:\n    generator + sum/any/all/max       total_squared, any_negative,\n                                      all_positive, max_word_length\n    next(gen, default) find-first     first_negative, first_key_with_value",
+    "constraints": "- Solve each prompt in a single expression where possible.\n- Inputs may be empty; handle the empty case via the reducer's\n  default argument or next()'s default — NOT a conditional.\n- Don't import anything; everything here is plain builtins.",
+    "kind": "multi",
+    "skeleton": "# ---------- generator expression + reducer ----------\n\ndef total_squared(xs: list[int]) -> int:\n    \"\"\"Return the sum of squares of xs (use sum() with a generator).\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef any_negative(xs: list[int]) -> bool:\n    \"\"\"Return True if any element is strictly negative.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef all_positive(xs: list[int]) -> bool:\n    \"\"\"Return True if every element is strictly positive. Empty list -> True.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef max_word_length(words: list[str]) -> int:\n    \"\"\"Return the length of the longest word, or 0 if there are none.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\n# ---------- next(gen, default) — find-first ----------\n\ndef first_negative(xs: list[int]) -> int | None:\n    \"\"\"Return the first negative element, or None if there is none.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n\ndef first_key_with_value(d: dict, target) -> object | None:\n    \"\"\"Return the first key whose value equals target, or None.\"\"\"\n    \"\"\"YOUR CODE HERE\"\"\"\n    pass\n",
+    "function_names": [
+      "total_squared",
+      "any_negative",
+      "all_positive",
+      "max_word_length",
+      "first_negative",
+      "first_key_with_value"
+    ],
+    "cases": {
+      "total_squared": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            14
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            0
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -2,
+              2
+            ],
+            8
+          ]
+        }
+      ],
+      "any_negative": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              -1
+            ],
+            true
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            false
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            false
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              0
+            ],
+            false
+          ]
+        }
+      ],
+      "all_positive": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            true
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              0,
+              3
+            ],
+            false
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            true
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -1
+            ],
+            false
+          ]
+        }
+      ],
+      "max_word_length": [
+        {
+          "__tuple__": [
+            [
+              "a",
+              "bbb",
+              "cc"
+            ],
+            3
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            0
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              "x"
+            ],
+            1
+          ]
+        }
+      ],
+      "first_negative": [
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              -3,
+              4,
+              -5
+            ],
+            -3
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              1,
+              2,
+              3
+            ],
+            null
+          ]
+        },
+        {
+          "__tuple__": [
+            [],
+            null
+          ]
+        },
+        {
+          "__tuple__": [
+            [
+              -1
+            ],
+            -1
+          ]
+        }
+      ],
+      "first_key_with_value": [
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {
+                  "a": 1,
+                  "b": 2,
+                  "c": 2
+                },
+                2
+              ]
+            },
+            "b"
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {
+                  "a": 1
+                },
+                99
+              ]
+            },
+            null
+          ]
+        },
+        {
+          "__tuple__": [
+            {
+              "__tuple__": [
+                {},
+                0
+              ]
+            },
+            null
+          ]
+        }
+      ]
+    }
+  }
+]
