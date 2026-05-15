@@ -1,0 +1,57 @@
+---
+import { problems, idToSlug } from '../lib/problems.ts';
+
+const grouped = new Map<string, typeof problems>();
+for (const p of problems) {
+  if (!grouped.has(p.topic)) grouped.set(p.topic, []);
+  grouped.get(p.topic)!.push(p);
+}
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+---
+<div class="topics">
+  {[...grouped.entries()].map(([topic, ps]) => (
+    <section class="topic">
+      <h3>{topic}</h3>
+      <ul>
+        {ps.map((p) => (
+          <li>
+            <a href={`${base}problem/${idToSlug(p.id)}`}>
+              <span class="title">{p.title}</span>
+              <span class="kind">{p.kind}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>
+
+<style>
+  .topics { display: flex; flex-direction: column; gap: 1.75rem; }
+  .topic h3 {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 .5rem 0;
+  }
+  .topic ul { list-style: none; padding: 0; margin: 0; }
+  .topic li { border-top: 1px solid var(--border); }
+  .topic li:last-child { border-bottom: 1px solid var(--border); }
+  .topic a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .55rem .25rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .topic a:hover { background: var(--row-hover); color: var(--accent); }
+  .kind {
+    font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>

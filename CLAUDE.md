@@ -16,6 +16,9 @@ drill/
                     # run_many(...) for multi-function drills
   scaffold.py       # generates solution.py from _spec.py
 utils/
+build/              # web build pipeline (see "Web layer" below)
+web/                # Astro static site
+Makefile            # transform / dev / build / clean targets
 ```
 
 Topic directories and problem directories are both numbered (`01-`, `02-`, …)
@@ -86,3 +89,48 @@ directory. Everything else is function-style, even when it lives under a
 4. Hand-verify every expected value in `CASES`. Off-by-one and
    "leaf-delay-doesn't-count"-style mistakes are easy to make and the
    harness can't catch them.
+5. After adding or editing a spec, run `make transform` to regenerate
+   `web/public/problems.json` so the web layer picks up the change.
+   The CLI workflow doesn't need this step.
+
+## Web layer
+
+The repo also ships as a static site at `web/`. Specs are the single
+source of truth for both the CLI and the web layer — never hand-edit
+`web/public/problems.json` or anything under `web/public/` that the
+build produces.
+
+**Pipeline** (`build/transform.py`):
+- Imports every `problems/**/_spec.py`, normalizes it to JSON, and writes
+  `web/public/problems.json`. Detects style from the spec attrs (`STUBS`
+  → multi, `CLASS_NAME` → class, else function).
+- Regenerates the skeleton from the spec (not from `solution.py`), so
+  in-progress user code in `solution.py` never leaks to the published
+  site.
+- Copies `build/web_harness.py` → `web/public/web_harness.py` and
+  `utils/__init__.py` → `web/public/utils.py` for the in-Pyodide runtime.
+
+**Special CASES values** (`build/encoders.py` ↔ `build/web_harness.py`):
+- `set`, `TreeNode`, `ListNode`, `tuple`, and `Ellipsis` are encoded with
+  `{"__set__": ...}` / `{"__tree__": ...}` / `{"__list__": ...}` /
+  `{"__tuple__": ...}` / `{"__ellipsis__": true}` markers and revived in
+  the worker before tests run.
+- If you introduce a new Python-only type in CASES, add it to both
+  files together.
+
+**Runtime** (`web/`):
+- Astro static site, one route per problem via `getStaticPaths()`.
+- CodeMirror 6 editor; Pyodide runs in a Web Worker
+  (`web/public/pyodide.worker.js`) so wasm compile doesn't block the
+  main thread.
+- User solutions are persisted to `localStorage` keyed by problem id,
+  with a SHA-1 of the current skeleton stored alongside for "skeleton
+  changed" detection.
+
+**Workflow**:
+- `make transform` — regenerate the published JSON (do this after any
+  `_spec.py` change).
+- `make dev` — runs transform then `astro dev`.
+- `make build` — runs transform then `astro build` (output: `web/dist`).
+- Deploys to GitHub Pages on `v*` tag push or manual
+  `workflow_dispatch` (`.github/workflows/deploy.yml`).

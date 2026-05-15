@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Blocks a push if the website build is broken.
+# Enable once with:  git config core.hooksPath .githooks
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+echo "pre-push: building website..."
+if ! make build >/tmp/prepush-build.log 2>&1; then
+  echo "pre-push: build FAILED — push aborted." >&2
+  echo "----- build output -----" >&2
+  cat /tmp/prepush-build.log >&2
+  exit 1
+fi
+echo "pre-push: build OK."
