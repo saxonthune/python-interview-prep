@@ -1,10 +1,9 @@
 import { defineConfig } from 'astro/config';
 
-// Deployed to a GitHub Pages project page at saxonthune.github.io/python-interview-prep.
-// For a custom CNAME (apex/subdomain), drop `base` and adjust `site`.
+// Deployed to Cloudflare Pages at the custom domain pythoning.saxon.zone,
+// served from the root path (no base prefix).
 export default defineConfig({
-  site: 'https://saxonthune.github.io',
-  base: '/python-interview-prep',
+  site: 'https://pythoning.saxon.zone',
   output: 'static',
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
